@@ -10,7 +10,7 @@ const JWT_SECRET = "super_tajny_klucz";
 
 app.use(express.json());
 
-const PORT = 3003; //port
+const PORT = 3000; //port - to pewnie bedziemy zmieniac
 
 function auth(req, res, next) {
   const header = req.headers.authorization;
@@ -28,6 +28,13 @@ function auth(req, res, next) {
   } catch (err) {
     return res.status(401).json({ error: "Nieprawidłowy token" });
   }
+}
+
+function requireAdmin(req, res, next) {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ error: "Wymagana rola admin" });
+  }
+  next();
 }
 
 
@@ -61,7 +68,7 @@ app.post("/api/login", async (req, res) => { //login
   }
 
   const token = jwt.sign( 
-    {userId: user.id, email: user.email },
+    {userId: user.id, email: user.email, role: user.role },
     JWT_SECRET, { expiresIn: "1h" }
   );
 
