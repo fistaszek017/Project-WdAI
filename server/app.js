@@ -8,9 +8,11 @@ const User = require("./models/users");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "super_tajny_klucz";
 
-app.use(express.json());
+const cors = require("cors");
+const PORT = 3000; 
 
-const PORT = 3000; //port - to pewnie bedziemy zmieniac
+app.use(cors());
+app.use(express.json());
 
 function auth(req, res, next) {
   const header = req.headers.authorization;
