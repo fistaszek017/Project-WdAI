@@ -6,12 +6,12 @@ import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
+import AdminDashboard from './pages/AdminDashboard';
 import { CartProvider, useCart } from './context/CartContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './index.css';
 
-// PrivateRoute component kept for future use if needed
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" />;
@@ -19,7 +19,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
 const NavBar = () => {
   const { cart } = useCart();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
@@ -32,6 +32,7 @@ const NavBar = () => {
         </Link>
         {isAuthenticated ? (
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            {user?.role === 'admin' && <Link to="/admin" className="nav-link" style={{ color: '#ffc107' }}>Admin Panel</Link>}
             <Link to="/profile" className="nav-link">Profile</Link>
             <button onClick={logout} className="nav-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit' }}>Logout</button>
           </div>
@@ -67,6 +68,11 @@ function App() {
             <Route path="/profile" element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            } />
+            <Route path="/admin" element={
+              <PrivateRoute>
+                <AdminDashboard />
               </PrivateRoute>
             } />
           </Routes>

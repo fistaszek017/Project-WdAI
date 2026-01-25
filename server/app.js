@@ -138,7 +138,123 @@ app.get("/api/orders", auth, async (req, res) => {
   }
 });
 
-sequelize.sync();
+const Review = require("./models/reviews");
+
+
+app.get("/api/products/:productId/reviews", async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const reviews = await Review.findAll({
+      where: { productId },
+      include: [{ model: User, attributes: ['email', 'id'] }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd pobierania opinii" });
+  }
+});
+
+
+app.get("/api/reviews", auth, requireAdmin, async (req, res) => {
+  try {
+    const reviews = await Review.findAll({
+      include: [{ model: User, attributes: ['email', 'id'] }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd pobierania wszystkich opinii" });
+  }
+});
+
+
+app.post("/api/reviews", auth, async (req, res) => {
+  const { productId, rating, comment } = req.body;
+  const userId = req.user.userId;
+
+  if (!rating || !comment || !productId) {
+    return res.status(400).json({ error: "Rating, comment, and productId are required" });
+  }
+
+  try {
+    const existingReview = await Review.findOne({
+      where: { userId, productId }
+    });
+
+    if (existingReview) {
+      return res.status(400).json({ error: "Już dodałeś opinię dla tego produktu" });
+    }
+
+    const review = await Review.create({
+      userId,
+      productId,
+      rating,
+      comment
+    });
+
+    const fullReview = await Review.findByPk(review.id, {
+      include: [{ model: User, attributes: ['email', 'id'] }]
+    });
+
+    res.json(fullReview);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd dodawania opinii" });
+  }
+});
+
+
+
+app.put("/api/reviews/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const { rating, comment } = req.body;
+  const userId = req.user.userId;
+
+  try {
+    const review = await Review.findByPk(id);
+    if (!review) return res.status(404).json({ error: "Review not found" });
+
+    if (review.UserId !== userId) {
+      return res.status(403).json({ error: "Nie możesz edytować cudzej opinii" });
+    }
+
+    review.rating = rating || review.rating;
+    review.comment = comment || review.comment;
+    await review.save();
+
+    res.json(review);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd edycji opinii" });
+  }
+});
+
+
+app.delete("/api/reviews/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.userId;
+  const userRole = req.user.role;
+
+  try {
+    const review = await Review.findByPk(id);
+    if (!review) return res.status(404).json({ error: "Review not found" });
+
+    if (Number(review.userId) !== Number(userId) && userRole !== 'admin') {
+      return res.status(403).json({ error: "Brak uprawnień do usunięcia tej opinii" });
+    }
+
+    await review.destroy();
+    res.json({ message: "Opinia usunięta" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd usuwania opinii" });
+  }
+});
+
+sequelize.sync({ alter: true });
 
 app.listen(PORT, () => {
   console.log(`Serwer działa na porcie ${PORT}`);
