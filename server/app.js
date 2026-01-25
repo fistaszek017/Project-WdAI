@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "super_tajny_klucz";
 
 const cors = require("cors");
-const PORT = 3000; 
+const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -51,7 +51,7 @@ app.post("/api/users", async (req, res) => { //create user
 
   const user = await User.create({ email, passwordHash });
 
-  res.json({ id: user.id });
+  res.json({ id: user.id, email: user.email, role: 'user' });
 });
 
 app.post("/api/login", async (req, res) => { //login
@@ -69,15 +69,74 @@ app.post("/api/login", async (req, res) => { //login
     return res.status(401).json({ error: "Nieprawidłowy email lub hasło" });
   }
 
-  const token = jwt.sign( 
-    {userId: user.id, email: user.email, role: user.role },
+  const token = jwt.sign(
+    { userId: user.id, email: user.email, role: user.role },
     JWT_SECRET, { expiresIn: "1h" }
   );
 
-  res.json({ token });
+  res.json({
+    token,
+    user: { id: user.id, email: user.email, role: user.role }
+  });
 });
 
 
+
+const { Order, OrderItem } = require("./models/orders");
+
+app.post("/api/orders", auth, async (req, res) => {
+  const { items, shipping } = req.body;
+  const userId = req.user.userId;
+
+  if (!items || items.length === 0) {
+    return res.status(400).json({ error: "Koszyk jest pusty" });
+  }
+
+  try {
+    const totalPrice = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+    const order = await Order.create({
+      UserId: userId,
+      totalPrice,
+      status: 'pending',
+      shippingName: shipping.name,
+      shippingAddress: shipping.address,
+      shippingCity: shipping.city,
+      shippingZip: shipping.zip
+    });
+
+    for (const item of items) {
+      await OrderItem.create({
+        OrderId: order.id,
+        productId: item.id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+        size: item.size
+      });
+    }
+
+    res.json({ message: "Zamówienie złożone", orderId: order.id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd podczas składania zamówienia" });
+  }
+});
+
+app.get("/api/orders", auth, async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const orders = await Order.findAll({
+      where: { UserId: userId },
+      include: [OrderItem],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd pobierania zamówień" });
+  }
+});
 
 sequelize.sync();
 

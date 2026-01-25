@@ -6,9 +6,7 @@ export default function Cart() {
     const navigate = useNavigate();
 
     const handleCheckout = () => {
-        alert('Proceeding to checkout...');
-        clearCart();
-        navigate('/');
+        navigate('/checkout');
     };
 
     if (cart.length === 0) {
