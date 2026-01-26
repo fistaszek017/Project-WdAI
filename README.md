@@ -3,10 +3,9 @@
 Projekt zaliczeniowy z przedmiotu WdAI (Wstęp do Aplikacji Internetowych). Prosty sklep internetowy umożliwiający przeglądanie produktów, dodawanie ich do koszyka, składanie zamówień oraz wystawianie opinii.
 
 ## 👨‍💻 Autorzy
-- **Kacper** (kacper@example.com)
-- **Staszek W** (staszek.w@example.com)
-- **Staszek O** (staszek.o@example.com)
-- **Osoba Prowadząca** (prowadzacy@example.com)
+- **Kacper Drozynski** 
+- **Stanisław Ogonowski** 
+- **Stanisław Wawrylak** 
 
 ## 🛠 Technologie
 - **Frontend:** React, React Router, Vite, Axios
