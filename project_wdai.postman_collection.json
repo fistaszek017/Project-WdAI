@@ -14,7 +14,10 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -23,9 +26,14 @@
 						"url": {
 							"raw": "http://localhost:3000/api/users",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "users"]
+							"path": [
+								"api",
+								"users"
+							]
 						}
 					},
 					"response": []
@@ -35,7 +43,10 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -44,9 +55,14 @@
 						"url": {
 							"raw": "http://localhost:3000/api/login",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "login"]
+							"path": [
+								"api",
+								"login"
+							]
 						}
 					},
 					"response": []
@@ -61,8 +77,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" },
-							{ "key": "Authorization", "value": "Bearer <YOUR_TOKEN_HERE>" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_TOKEN_HERE>"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -71,9 +93,14 @@
 						"url": {
 							"raw": "http://localhost:3000/api/orders",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "orders"]
+							"path": [
+								"api",
+								"orders"
+							]
 						}
 					},
 					"response": []
@@ -83,14 +110,22 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{ "key": "Authorization", "value": "Bearer <YOUR_TOKEN_HERE>" }
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_TOKEN_HERE>"
+							}
 						],
 						"url": {
 							"raw": "http://localhost:3000/api/orders",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "orders"]
+							"path": [
+								"api",
+								"orders"
+							]
 						}
 					},
 					"response": []
@@ -108,9 +143,16 @@
 						"url": {
 							"raw": "http://localhost:3000/api/products/1/reviews",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "products", "1", "reviews"]
+							"path": [
+								"api",
+								"products",
+								"1",
+								"reviews"
+							]
 						}
 					},
 					"response": []
@@ -120,8 +162,14 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" },
-							{ "key": "Authorization", "value": "Bearer <YOUR_TOKEN_HERE>" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_TOKEN_HERE>"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -130,9 +178,14 @@
 						"url": {
 							"raw": "http://localhost:3000/api/reviews",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "reviews"]
+							"path": [
+								"api",
+								"reviews"
+							]
 						}
 					},
 					"response": []
@@ -142,8 +195,14 @@
 					"request": {
 						"method": "PUT",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" },
-							{ "key": "Authorization", "value": "Bearer <YOUR_TOKEN_HERE>" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_TOKEN_HERE>"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -152,9 +211,15 @@
 						"url": {
 							"raw": "http://localhost:3000/api/reviews/1",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "reviews", "1"]
+							"path": [
+								"api",
+								"reviews",
+								"1"
+							]
 						}
 					},
 					"response": []
@@ -164,14 +229,23 @@
 					"request": {
 						"method": "DELETE",
 						"header": [
-							{ "key": "Authorization", "value": "Bearer <YOUR_TOKEN_HERE>" }
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_TOKEN_HERE>"
+							}
 						],
 						"url": {
 							"raw": "http://localhost:3000/api/reviews/1",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "reviews", "1"]
+							"path": [
+								"api",
+								"reviews",
+								"1"
+							]
 						}
 					},
 					"response": []
@@ -181,14 +255,89 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{ "key": "Authorization", "value": "Bearer <YOUR_ADMIN_TOKEN_HERE>" }
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_ADMIN_TOKEN_HERE>"
+							}
 						],
 						"url": {
 							"raw": "http://localhost:3000/api/reviews",
 							"protocol": "http",
-							"host": ["localhost"],
+							"host": [
+								"localhost"
+							],
 							"port": "3000",
-							"path": ["api", "reviews"]
+							"path": [
+								"api",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin - Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_ADMIN_TOKEN_HERE>"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/admin/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <YOUR_ADMIN_TOKEN_HERE>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"shipped\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admin/orders/1/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"1",
+								"status"
+							]
 						}
 					},
 					"response": []

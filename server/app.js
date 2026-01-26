@@ -138,6 +138,37 @@ app.get("/api/orders", auth, async (req, res) => {
   }
 });
 
+app.get("/api/admin/orders", auth, requireAdmin, async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: [OrderItem, { model: User, attributes: ['email'] }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd pobierania zamówień administratora" });
+  }
+});
+
+app.put("/api/admin/orders/:id/status", auth, requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const order = await Order.findByPk(id);
+    if (!order) return res.status(404).json({ error: "Zamówienie nie istnieje" });
+
+    order.status = status;
+    await order.save();
+
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd aktualizacji statusu" });
+  }
+});
+
 const Review = require("./models/reviews");
 
 

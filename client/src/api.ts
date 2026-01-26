@@ -74,3 +74,17 @@ export const updateReview = async (token: string, reviewId: number, rating: numb
     return response.data;
 };
 
+
+export const getAllOrders = async (token: string) => {
+    const response = await axios.get(`${LOCAL_API_URL}/admin/orders`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+};
+
+export const updateOrderStatus = async (token: string, orderId: number, status: string) => {
+    const response = await axios.put(`${LOCAL_API_URL}/admin/orders/${orderId}/status`, { status }, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+};
