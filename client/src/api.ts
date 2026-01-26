@@ -67,3 +67,10 @@ export const deleteReview = async (token: string, reviewId: number) => {
     return response.data;
 };
 
+export const updateReview = async (token: string, reviewId: number, rating: number, comment: string) => {
+    const response = await axios.put(`${LOCAL_API_URL}/reviews/${reviewId}`, { rating, comment }, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+};
+

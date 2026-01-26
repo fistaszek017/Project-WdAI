@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export default function Cart() {
-    const { cart, removeFromCart, clearCart, totalPrice } = useCart();
+    const { cart, removeFromCart, clearCart, totalPrice, updateQuantity } = useCart();
     const navigate = useNavigate();
 
     const handleCheckout = () => {
@@ -32,6 +32,22 @@ export default function Cart() {
                             <h3>{item.title}</h3>
                             {item.size && <span className="category-tag" style={{ fontSize: '0.8rem', padding: '0.1rem 0.5rem', marginBottom: '0.2rem' }}>Size: {item.size}</span>}
                             <p>${item.price} x {item.quantity}</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                                <button
+                                    onClick={() => updateQuantity(item.id, item.quantity - 1, item.size)}
+                                    disabled={item.quantity <= 1}
+                                    style={{ padding: '0.25rem 0.5rem', cursor: 'pointer' }}
+                                >
+                                    -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                    onClick={() => updateQuantity(item.id, item.quantity + 1, item.size)}
+                                    style={{ padding: '0.25rem 0.5rem', cursor: 'pointer' }}
+                                >
+                                    +
+                                </button>
+                            </div>
                         </div>
                         <div className="cart-item-total">
                             ${(item.price * item.quantity).toFixed(2)}
