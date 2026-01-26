@@ -3,7 +3,7 @@
 Projekt zaliczeniowy z przedmiotu WdAI (Wstęp do Aplikacji Internetowych). Prosty sklep internetowy umożliwiający przeglądanie produktów, dodawanie ich do koszyka, składanie zamówień oraz wystawianie opinii.
 
 ## 👨‍💻 Autorzy
-- **Kacper Drozynski** 
+- **Kacper Drożyński** 
 - **Stanisław Ogonowski** 
 - **Stanisław Wawrylak** 
 
